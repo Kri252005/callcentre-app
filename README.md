@@ -1,5 +1,9 @@
 # On-Ground.ai Call Centre App (assignment rebuild)
 
+**Submitted by:** YOUR FULL NAME
+**Live demo:** https://callcentre-app.vercel.app
+**Repo:** https://github.com/Kri252005/callcentre-app
+
 A call-centre agent's workspace: dashboard, call plan, missed calls, recent calls, calendar, the Pulse team chat and a leads card. It includes **real in-app calling**: human-to-human voice over WebRTC, plus an AI-customer practice call you can speak to.
 
 ## Run it
@@ -7,11 +11,12 @@ A call-centre agent's workspace: dashboard, call plan, missed calls, recent call
 ```bash
 npm install
 npm run dev        # http://localhost:5173
-npm test           # 12 UI tests
+npm test           # 12 UI tests (on Windows use: npx vitest run --pool=threads)
 npm run build      # production build in dist/
+npm run preview    # serve the production build locally
 ```
 
-Node 20+ recommended. Microphone access needs `localhost` or HTTPS. To test on a phone, deploy `dist/` to any static host (Vercel, Netlify, GitHub Pages) and open that URL on both devices.
+Node 20+ recommended. Microphone access needs `localhost` or HTTPS. The live demo above is on Vercel (HTTPS), so it can be opened on a phone and a laptop to test calling.
 
 ## Stack and why
 
@@ -22,7 +27,7 @@ Node 20+ recommended. Microphone access needs `localhost` or HTTPS. To test on a
 - **Plain CSS** (one file, CSS variables): small type sizes close to the mock, no UI kit.
 - **Vitest + Testing Library**: UI tests.
 
-Data lives in `src/data/sampleData.js` (a local module, all sample data). Chat messages, the "Needs your input" answer and the call log persist in `localStorage`.
+Data lives in `src/data/sampleData.js` (a local module, all sample data). Chat messages, the "Needs your input" answer and the call log persist in `localStorage`. A "Reset demo data" link in the sidebar clears them.
 
 ## What is done
 
@@ -53,17 +58,25 @@ There are three ways to call, and I want to be exact about what each one is.
 2. **Phone call (real hand-off).** Every lead has a **Phone** / **Dial on phone** button that is a `tel:` link, so a phone or a softphone app on the laptop dials the number. The numbers in the sample data are fictional.
 3. **AI-to-human practice call.** "Practice a call" starts a call with an AI customer (Meera). She **speaks** using the browser's speech synthesis, and you reply by **voice** (browser speech recognition, Chrome) or by typing. Her replies come from **keyword rules**, not a language model (`practicePersona` in the data file), so it is predictable and works offline. Practice calls are logged to Recent.
 
+## What I tested
+
+- **Two-tab call on one laptop (Chrome): worked.** One tab called the other using the code, the call connected, and an entry with its measured length appeared in Plan > Recent.
+- **Laptop-to-phone call on the live link: NOT YET TESTED.** (Edit this line with the real result.)
+- Unit/UI tests: 12 passing (the PeerJS calls are stubbed in tests).
+- The practice call's speech was tried in Chrome only. Speech recognition is Chrome-specific.
+
 ## Not done / known limits
 
-- **I could not run a real two-device call in my build environment** (no browser available there). The WebRTC path is implemented and the UI states and validation are tested against a stubbed PeerJS, but **you should do one real two-device call before recording the demo**: open the app on laptop and phone (or two tabs), and call one from the other.
-- The public PeerJS server is free and best-effort. Behind strict corporate or school networks the audio can fail without a TURN server.
-- The mock HTML file was not in the files I worked from; I matched the layout using the screenshots in the assignment PDF. Compare against the mock once and adjust spacing and colours if needed.
+- The public PeerJS server is free and best-effort. There is no TURN server, so behind strict corporate or school networks the audio can fail.
+- In-app calls reach another browser running the app, not a real phone number (see above).
+- I did not have the mock HTML file; I matched the layout using the screenshots in the assignment PDF, so spacing and colours will differ in places.
 - The DEMO strip is replaced by a smaller "CALL" strip with the floating dial button; Kudos and task-agent rows show a toast instead of opening a screen.
-- Sample numbers differ slightly from the mock (for example the missed-call total).
+- Some values are static (the top-bar call badge, the "In queue" KPI, task counts), and sample numbers differ slightly from the mock (for example the missed-call total).
+- The production bundle is one chunk of about 770 KB (a size warning only).
 
 ## AI tools used
 
-Claude (Anthropic) assisted with planning, generating code and writing tests. I reviewed and can explain the code.
+Claude (Anthropic) assisted with planning, generating code and writing tests. I reviewed the code and can explain it.
 
 ## Project structure
 

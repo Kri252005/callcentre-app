@@ -1,5 +1,6 @@
 import { Bar, BarChart, CartesianGrid, Cell, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { Link } from 'react-router-dom';
+import LiveSignal from '../components/LiveSignal';
 import {
   agent, callsHandled7d, csatTrend7d, kpis, progress, tasks, waiting,
 } from '../data/sampleData';
@@ -53,6 +54,8 @@ export default function Dashboard() {
             </div>
           </section>
 
+          <LiveSignal />
+
           <section>
             <div className="section-head"><span className="eyebrow">WHO'S WAITING</span><Link to="/plan/incoming">Open planner</Link></div>
             {waiting.map((w) => (
@@ -90,7 +93,7 @@ export default function Dashboard() {
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={callsHandled7d} margin={{ top: 18, right: 4, left: 4, bottom: 0 }}>
               <CartesianGrid vertical={false} stroke="#e6e6ea" />
-              <XAxis dataKey="day" tickLine={false} axisLine={false} fontSize={11} />
+              <XAxis dataKey="day" tickLine={false} axisLine={false} fontSize={11} interval={0} />
               <YAxis hide />
               <Tooltip cursor={{ fill: 'rgba(0,0,0,0.04)' }} />
               <Bar dataKey="value" radius={[3, 3, 0, 0]} label={{ position: 'top', fontSize: 11, fill: '#555' }}>
@@ -107,10 +110,10 @@ export default function Dashboard() {
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={csatTrend7d} margin={{ top: 14, right: 12, left: 4, bottom: 0 }}>
               <CartesianGrid vertical={false} stroke="#e6e6ea" />
-              <XAxis dataKey="day" tickLine={false} axisLine={false} fontSize={11} />
+              <XAxis dataKey="day" tickLine={false} axisLine={false} fontSize={11} interval={0} />
               <YAxis hide domain={[80, 100]} />
-              <Tooltip formatter={(v) => `${v}%`} />
-              <Line type="monotone" dataKey="value" stroke="#3b6fd4" strokeWidth={2} dot={{ r: 3 }} />
+              <Tooltip formatter={(v) => [`${v}%`, 'CSAT']} />
+              <Line type="monotone" dataKey="value" stroke="#1a7a5a" strokeWidth={2} dot={{ r: 3 }} />
             </LineChart>
           </ResponsiveContainer>
         </div>
