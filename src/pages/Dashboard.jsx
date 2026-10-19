@@ -1,5 +1,4 @@
-import { Bar, BarChart, CartesianGrid, Cell, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { Link } from 'react-router-dom';
+import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import LiveSignal from '../components/LiveSignal';
 import {
   agent, callsHandled7d, csatTrend7d, kpis, progress, tasks, waiting,
@@ -104,20 +103,22 @@ export default function Dashboard() {
         </div>
       </section>
 
-      <section className="chart-card">
-        <div className="eyebrow">CSAT TREND · LAST 7 DAYS</div>
-        <div className="chart" style={{ height: 150 }}>
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={csatTrend7d} margin={{ top: 14, right: 12, left: 4, bottom: 0 }}>
-              <CartesianGrid vertical={false} stroke="#e6e6ea" />
-              <XAxis dataKey="day" tickLine={false} axisLine={false} fontSize={11} interval={0} />
-              <YAxis hide domain={[80, 100]} />
-              <Tooltip formatter={(v) => [`${v}%`, 'CSAT']} />
-              <Line type="monotone" dataKey="value" stroke="#1a7a5a" strokeWidth={2} dot={{ r: 3 }} />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-      </section>
+<section className="chart-card">
+  <div className="eyebrow">CSAT TREND · LAST 7 DAYS</div>
+  <div className="chart" style={{ height: 150 }}>
+    <ResponsiveContainer width="100%" height="100%">
+      <BarChart data={csatTrend7d} margin={{ top: 18, right: 4, left: 4, bottom: 0 }}>
+        <CartesianGrid vertical={false} stroke="#e6e6ea" />
+        <XAxis dataKey="day" tickLine={false} axisLine={false} fontSize={11} interval={0} />
+        <YAxis hide domain={[0, 100]} />
+        <Tooltip cursor={{ fill: 'rgba(0,0,0,0.04)' }} formatter={(v) => [`${v}%`, 'CSAT']} />
+        <Bar dataKey="value" radius={[3, 3, 0, 0]} label={{ position: 'top', fontSize: 11, fill: '#555', formatter: (v) => `${v}%` }}>
+          {csatTrend7d.map((d, i) => (<Cell key={d.day} fill={i === csatTrend7d.length - 1 ? '#2f64c4' : '#9db8f2'} />))}
+        </Bar>
+      </BarChart>
+    </ResponsiveContainer>
+  </div>
+</section>
     </div>
   );
 }
