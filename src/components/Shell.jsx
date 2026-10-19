@@ -16,6 +16,8 @@ export default function Shell() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { pathname } = useLocation();
   const inPlan = pathname.startsWith('/plan');
+  // The floating call strip would cover the chat message box, so hide it inside a channel.
+  const onChannel = pathname.startsWith('/pulse/');
   const close = () => setMenuOpen(false);
 
   return (
@@ -65,12 +67,14 @@ export default function Shell() {
         </main>
       </div>
 
-      <div className="demo-strip" aria-label="Calling shortcuts">
-        <span className="demo-tag">CALL</span>
-        <button onClick={() => openDialer('human')}>In-app call</button>
-        <button onClick={() => openDialer('practice')}>Practice call</button>
-        <button className="dial-fab" onClick={() => openDialer('human')} aria-label="Open dialer">☎</button>
-      </div>
+      {!onChannel && (
+        <div className="demo-strip" aria-label="Calling shortcuts">
+          <span className="demo-tag">CALL</span>
+          <button onClick={() => openDialer('human')}>In-app call</button>
+          <button onClick={() => openDialer('practice')}>Practice call</button>
+          <button className="dial-fab" onClick={() => openDialer('human')} aria-label="Open dialer">☎</button>
+        </div>
+      )}
 
       <Dialer />
       <LeadsModal />
