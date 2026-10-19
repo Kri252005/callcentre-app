@@ -1,6 +1,6 @@
 # On-Ground.ai Call Centre App (assignment rebuild)
 
-**Submitted by:** YOUR FULL NAME
+**Submitted by:** R KRITHI MALLIKA
 **Live demo:** https://callcentre-app.vercel.app
 **Repo:** https://github.com/Kri252005/callcentre-app
 
@@ -48,6 +48,7 @@ Bonus
 - [x] Practise a call and Call back
 - [x] Works at phone width
 - [x] Charts with a library (Recharts)
+- [x] A "live signal" card on the dashboard that cycles through sample call signals (simulated data, labelled SAMPLE)
 
 ## How calling works
 
@@ -61,7 +62,7 @@ There are three ways to call, and I want to be exact about what each one is.
 ## What I tested
 
 - **Two-tab call on one laptop (Chrome): worked.** One tab called the other using the code, the call connected, and an entry with its measured length appeared in Plan > Recent.
-- **Laptop-to-phone call on the live link: NOT YET TESTED.** (Edit this line with the real result.)
+- **Laptop-to-phone call on the live link: worked.** Both devices opened the Vercel URL over HTTPS; one shared its code and the other called it, and the call connected. Calling from the phone to the laptop was the reliable direction, and both devices need to be ready (showing a code) before calling. There is no TURN server, so I would expect it to depend on the network (see limits).
 - Unit/UI tests: 12 passing (the PeerJS calls are stubbed in tests).
 - The practice call's speech was tried in Chrome only. Speech recognition is Chrome-specific.
 
@@ -86,7 +87,7 @@ src/
   state/AppState.jsx      shared state: messages, call log, modals, toast
   lib/useHumanCall.js     WebRTC calling via PeerJS
   lib/usePracticeCall.js  AI practice call (speech in/out + rules)
-  components/             Shell, Dialer, LeadsModal
+  components/             Shell, Dialer, LeadsModal, LiveSignal
   pages/                  Dashboard, Plan (3 screens), Calendar, Pulse (2 screens)
   test/                   Vitest UI tests
 ```
