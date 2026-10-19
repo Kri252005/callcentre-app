@@ -1,10 +1,10 @@
 import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { Link } from 'react-router-dom';
 import LiveSignal from '../components/LiveSignal';
 import {
   agent, callsHandled7d, csatTrend7d, kpis, progress, tasks, waiting,
 } from '../data/sampleData';
 import { useAppState } from '../state/AppState';
-
 const inr = (n) => `₹${n.toLocaleString('en-IN')}`;
 
 export default function Dashboard() {
