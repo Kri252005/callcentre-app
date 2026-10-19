@@ -52,6 +52,14 @@ export function AppStateProvider({ children }) {
     return true;
   }, []);
 
+  // Put chat, the needs-input answer and the call log back to the starting sample data.
+  const resetDemo = useCallback(() => {
+    setMessages({ 'callcentre-team': seedChannels['callcentre-team'].messages });
+    setNeedsInputAnswer(null);
+    setCallLog(seedRecent);
+    showToast('Demo data reset');
+  }, [showToast]);
+
   // Real calls get logged with the real measured duration.
   const logCall = useCallback((entry) => {
     setCallLog((log) => [{ id: `call${Date.now()}`, ...entry }, ...log]);
@@ -67,6 +75,7 @@ export function AppStateProvider({ children }) {
     dialer, openDialer: (mode = 'human', target = null) => setDialer({ open: true, mode, target }),
     closeDialer: () => setDialer((d) => ({ ...d, open: false })),
     toast, showToast,
+    resetDemo,
   };
   return <AppStateContext.Provider value={value}>{children}</AppStateContext.Provider>;
 }

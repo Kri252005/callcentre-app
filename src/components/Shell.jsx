@@ -12,7 +12,7 @@ const planLinks = [
 ];
 
 export default function Shell() {
-  const { toast, openDialer } = useAppState();
+  const { toast, openDialer, resetDemo } = useAppState();
   const [menuOpen, setMenuOpen] = useState(false);
   const { pathname } = useLocation();
   const inPlan = pathname.startsWith('/plan');
@@ -41,6 +41,9 @@ export default function Shell() {
           <NavLink to="/pulse" onClick={close} className="nav-main nav-pulse">
             <span className="nav-ico" aria-hidden="true">◉</span> Pulse
           </NavLink>
+          <div className="subnav">
+            <button className="subnav-btn" onClick={() => { resetDemo(); close(); }}>Reset demo data</button>
+          </div>
         </nav>
       </aside>
       {menuOpen && <div className="scrim" onClick={close} />}
